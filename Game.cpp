@@ -1,15 +1,16 @@
 #include "headers/Game.h"
-#include "headers/Board.h"
 #include <iostream>
 
 Game::Game(){
+  p1Board.generateBoard();
+  p1Board.renderBoard();
 
-  std::cout<<"woofo";
-  Board gameBoard;
-
-  gameBoard.generateBoard();
+  p2Board.generateBoard();
+  p2Board.renderBoard();
 }
 
 void Game::gameMode1(){
-  
+  // Player Vs Computer
+
+
 }
