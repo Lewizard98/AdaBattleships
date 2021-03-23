@@ -11,6 +11,4 @@ Game::Game(){
 
 void Game::gameMode1(){
   // Player Vs Computer
-
-
 }

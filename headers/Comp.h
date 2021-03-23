@@ -1,0 +1,4 @@
+class Comp{
+  public:
+  Comp();
+};
