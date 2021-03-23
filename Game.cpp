@@ -3,7 +3,11 @@
 #include <iostream>
 
 Game::Game(){
-  
+
+  std::cout<<"woofo";
+  Board gameBoard;
+
+  gameBoard.generateBoard();
 }
 
 void Game::gameMode1(){
