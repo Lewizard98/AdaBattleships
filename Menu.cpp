@@ -1,4 +1,4 @@
-#include "Menu.h"
+#include "headers/Menu.h"
 #include <iostream>
 
 void invalidInput(){
@@ -8,11 +8,13 @@ void invalidInput(){
 }
 
 Menu::Menu(){
+  std::cout << "Welcome to Ada Battleships!..." << std::endl;
+}
+
+int Menu::getGameType(){
   int menuInput;
 
-
-  std::cout << "Welcome to Ada Battleships!..." << std::endl 
-  << "Please choose an option using by inputing a number" << std::endl;
+  std::cout << "Please choose an option using by inputing a number" << std::endl;
 
   while(true){
     std::cout << "[1]. Single Player Vs Computer" << std::endl
@@ -28,11 +30,5 @@ Menu::Menu(){
     }
   }
 
-  if(menuInput == 0){
-    std::cout << std::endl << "Thanks for playing :)" << std::endl;
-  } else if(menuInput == 1){
-    std::cout << std::endl << "Great! Let's play!" << std::endl;
-  }
-
-  
+  return menuInput;
 }
