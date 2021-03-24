@@ -1,5 +1,6 @@
 #include "Board.h"
 #include "Comp.h"
+#include "User.h"
 #include <vector>
 
 class Game{
@@ -11,5 +12,6 @@ class Game{
   Board p1Board;
   Board p2Board;
   Comp compPlayer;
+  User userPlayer;
   std::vector<std::vector<std::string>> ships;
 };

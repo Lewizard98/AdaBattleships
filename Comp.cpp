@@ -10,6 +10,24 @@ bool isClear(int shipSize,int ypos,int xpos, std::vector<std::vector<std::string
         return false;
       }
     }
+  }else if(direction == "-x"){
+    for(int i=0;i<shipSize;i++){
+      if(board[ypos][xpos-i] != " "){
+        return false;
+      }
+    }
+  }else if(direction == "y-"){
+    for(int i=0;i<shipSize;i++){
+      if(board[ypos+i][xpos] != " "){
+        return false;
+      }
+    }
+  } else if(direction == "-y"){
+    for(int i=0;i<shipSize;i++){
+      if(board[ypos-i][xpos] != " "){
+        return false;
+      }
+    }
   }
 
   return true;
@@ -32,11 +50,6 @@ void Comp::placeShips(std::vector<std::vector<std::string>> ships){
     xrand = rand() % compBoard.boardState[0].size();
     yrand = rand() % compBoard.boardState[0].size();
 
-    while(compBoard.boardState[yrand][xrand] != " "){
-      xrand = rand() % compBoard.boardState[0].size();
-      yrand = rand() % compBoard.boardState[0].size();
-    }
-
     bool placed = false;
 
     while(!placed){
@@ -49,28 +62,27 @@ void Comp::placeShips(std::vector<std::vector<std::string>> ships){
             compBoard.boardState[yrand][xrand+j] = ships[i][0];
           }
           placed = true;
-        } else {
+        } else if(isClear(stoi(ships[i][1]),yrand,xrand,compBoard.boardState,"-x")) {
           for(int j=stoi(ships[i][1]);j>0;j--){
             compBoard.boardState[yrand][xrand-j] = ships[i][0];
           }
-      }
+          placed = true;
+        }
       } else{
         if(yrand + stoi(ships[i][1]) <= 10 && isClear(stoi(ships[i][1]),yrand,xrand,        compBoard.boardState,"y-")){
           for(int j=0;j<stoi(ships[i][1]);j++){
             compBoard.boardState[yrand+j][xrand] = ships[i][0];
           }
           placed = true;
-        } else {
+        } else if(isClear(stoi(ships[i][1]),yrand,xrand,compBoard.boardState,"-y")){
           for(int j=stoi(ships[i][1]);j>0;j--){
             compBoard.boardState[yrand-j][xrand] = ships[i][0];
           }
+          placed = true;
         }
       }
+      xrand = rand() % compBoard.boardState[0].size();
+      yrand = rand() % compBoard.boardState[0].size();
     }
   }
-
-  
-
-  compBoard.renderBoard();
-
 }
