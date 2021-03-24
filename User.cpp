@@ -208,6 +208,8 @@ void User::placeShips(std::vector<std::vector<std::string>> ships){
   }
 }
 
-void User::takeTurn(){
-  std::cout << "\nIt is your turn...\nThe opponents board looks like this:\n"
+void User::takeTurn(Board compBoard){
+  std::cout << "\nIt is your turn...\nThe opponents board looks like this:\n";
+  compBoard.renderBoard();
+
 }
