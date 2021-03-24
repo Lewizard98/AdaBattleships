@@ -61,6 +61,35 @@ void Board::renderBoard(){
   std::cout<<std::endl<<std::endl;
 }
 
+bool isShip(std::string str, std::vector<std::string> toplineAlpha){
+  for(int i=0;i<toplineAlpha.size();i++){
+    if(toplineAlpha[i] == str){
+      return true;
+    }
+  }
+  return false;
+}
+
+void Board::renderOtherBoard(){
+  int boardSize = 10;
+  int fullBoard = (boardSize+1)*2;
+  for(int i=0;i<Board::boardState.size();i++){
+    for(int j=0;j<Board::boardState[i].size();j++){
+      if(isShip(Board::boardState[i][j],toplineAlpha)){
+        std::cout<<" ";
+      } else{
+        std::cout<<Board::boardState[i][j];
+      }
+      std::cout<<"|";
+    }
+    std::cout<<std::endl;
+    printLine(fullBoard);
+    std::cout<<std::endl;
+    
+  }
+  std::cout<<std::endl<<std::endl;
+}
+
 std::vector<std::vector<std::string>> Board::getBoardState(){
   return Board::boardState;
 }

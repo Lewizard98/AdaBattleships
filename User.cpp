@@ -78,10 +78,23 @@ void User::setBoard(Board inpBoard){
   userBoard = inpBoard;
 }
 
-void User::placeShips(std::vector<std::vector<std::string>> ships){
+int User::placeShips(std::vector<std::vector<std::string>> ships){
   int selectShip;
   int direction;
   std::string startPos;
+  int autoPlaceQ;
+
+  std::cin.clear();
+  std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+  std::cout<< "\nWould you like to auto-place ships?\n1. Auto-place\nAny Key. I want to place them\nInput";
+  if(std::cin >> autoPlaceQ){
+    autoPlaceShips(ships);
+    userBoard.renderBoard();
+    std::cin.clear();
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    return 0;
+  }
+
 
   std::cin.clear();
   std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -92,9 +105,10 @@ void User::placeShips(std::vector<std::vector<std::string>> ships){
   while(ships.size() > 0){
     std::cout<<std::endl<<std::endl<<"Please select which ship you want to place:\n";
     bool shipPlaced = false;
-    for(int i=0;i<ships.size();i++){
-      std::cout<< i << ". " << ships[i][0] << " Size:" << ships[i][1] <<std::endl;
+    for(int i=1;i<=ships.size();i++){
+      std::cout<< i << ". " << ships[i-1][0] << " Size:" << ships[i-1][1] <<std::endl;
     }
+    std::cout<< "0. Auto-place ships\n";
 
 
 
@@ -109,8 +123,8 @@ void User::placeShips(std::vector<std::vector<std::string>> ships){
 
       if(!(std::cin >> selectShip)){
         std::cout<<"\nPlease enter a valid input...\n";
-      } else if(selectShip < ships.size()){
-        std::vector<std::string> selectedShip = ships[selectShip]; 
+      }else if(selectShip < ships.size()){
+        std::vector<std::string> selectedShip = ships[selectShip-1]; 
         
         do{
         std::cout << "Please choose a place for the " << selectedShip[0] << std::endl;
@@ -206,10 +220,59 @@ void User::placeShips(std::vector<std::vector<std::string>> ships){
       }
     }
   }
+  return 0;
+}
+
+void User::autoPlaceShips(std::vector<std::vector<std::string>> ships){
+  srand((unsigned int)time(NULL));
+  int xrand;
+  int yrand;
+  int xOry;
+
+  for(int i=0;i<ships.size();i++){
+    xrand = rand() % userBoard.boardState[0].size();
+    yrand = rand() % userBoard.boardState[0].size();
+
+    bool placed = false;
+
+    while(!placed){
+      xOry = rand() % 2;
+    //compBoard.boardState[yrand][xrand] = ships[i][0];
+
+      if(xOry != 1){
+        if(xrand + stoi(ships[i][1]) <= 10 && isClearUser(stoi(ships[i][1]),yrand,xrand,    userBoard.boardState,"x-")){
+          for(int j=0;j<stoi(ships[i][1]);j++){
+            userBoard.boardState[yrand][xrand+j] = ships[i][0].substr(0,1);
+          }
+          placed = true;
+        } else if(isClearUser(stoi(ships[i][1]),yrand,xrand,userBoard.boardState,"-x")) {
+          for(int j=stoi(ships[i][1]);j>0;j--){
+            userBoard.boardState[yrand][xrand-j] = ships[i][0].substr(0,1);
+          }
+          placed = true;
+        }
+      } else{
+        if(yrand + stoi(ships[i][1]) <= 10 && isClearUser(stoi(ships[i][1]),yrand,xrand,        userBoard.boardState,"y-")){
+          for(int j=0;j<stoi(ships[i][1]);j++){
+            userBoard.boardState[yrand+j][xrand] = ships[i][0].substr(0,1);
+          }
+          placed = true;
+        } else if(isClearUser(stoi(ships[i][1]),yrand,xrand,userBoard.boardState,"-y")){
+          for(int j=stoi(ships[i][1]);j>0;j--){
+            userBoard.boardState[yrand-j][xrand] = ships[i][0].substr(0,1);
+          }
+          placed = true;
+        }
+      }
+      xrand = rand() % userBoard.boardState[0].size();
+      yrand = rand() % userBoard.boardState[0].size();
+    }
+  }
 }
 
 void User::takeTurn(Board compBoard){
   std::cout << "\nIt is your turn...\nThe opponents board looks like this:\n";
-  compBoard.renderBoard();
+  
+  compBoard.renderOtherBoard();
 
 }

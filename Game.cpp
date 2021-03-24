@@ -27,17 +27,17 @@ void Game::gameMode1(){
 
   int winner = 0;
 
-  while(true){
+  //while(true){
 
     userPlayer.takeTurn(compPlayer.compBoard);
     if(userPlayer.winner){
       std::cout<<"\nWINNER\n";
-      break;
+      //break;
     }
     //compPlayer.takeTurn(userPlayer.userBoard);
     //if(compPlayer.winner){
     //  std::cout<<"\nLOSER\n";
     //  break;
     //}
-  }
+  //}
 }
