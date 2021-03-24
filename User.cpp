@@ -86,7 +86,7 @@ int User::placeShips(std::vector<std::vector<std::string>> ships){
 
   std::cin.clear();
   std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-  std::cout<< "\nWould you like to auto-place ships?\n1. Auto-place\nAny Key. I want to place them\nInput";
+  std::cout<< "\nWould you like to auto-place ships?\n1. Auto-place\nAny Key. I want to place them\nInput: ";
   if(std::cin >> autoPlaceQ){
     autoPlaceShips(ships);
     userBoard.renderBoard();
