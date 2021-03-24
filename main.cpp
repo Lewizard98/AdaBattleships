@@ -11,7 +11,6 @@ int main() {
   if (gameType == 0){
     std::cout << std::endl << "Okay, Thanks for playing Ada Battleships :)";
   } else if (gameType == 1){
-    //std::cout<<"woof";
     Game game;
     game.gameMode1();
   }

@@ -1,6 +1,19 @@
 #include <iostream>
 #include <stdlib.h>
+#include <vector>
 #include "headers/Comp.h"
+
+bool isClear(int shipSize,int ypos,int xpos, std::vector<std::vector<std::string>> board,std::string direction){
+  if(direction == "x-"){
+    for(int i=0;i<shipSize;i++){
+      if(board[ypos][xpos+i] != " "){
+        return false;
+      }
+    }
+  }
+
+  return true;
+}
 
 Comp::Comp(){
 }
@@ -24,9 +37,36 @@ void Comp::placeShips(std::vector<std::vector<std::string>> ships){
       yrand = rand() % compBoard.boardState[0].size();
     }
 
-    xOry = rand() % 1;
+    bool placed = false;
 
-  compBoard.boardState[yrand][xrand] = ships[i][0];
+    while(!placed){
+      xOry = rand() % 2;
+    //compBoard.boardState[yrand][xrand] = ships[i][0];
+
+      if(xOry != 1){
+        if(xrand + stoi(ships[i][1]) <= 10 && isClear(stoi(ships[i][1]),yrand,xrand,    compBoard.boardState,"x-")){
+          for(int j=0;j<stoi(ships[i][1]);j++){
+            compBoard.boardState[yrand][xrand+j] = ships[i][0];
+          }
+          placed = true;
+        } else {
+          for(int j=stoi(ships[i][1]);j>0;j--){
+            compBoard.boardState[yrand][xrand-j] = ships[i][0];
+          }
+      }
+      } else{
+        if(yrand + stoi(ships[i][1]) <= 10 && isClear(stoi(ships[i][1]),yrand,xrand,        compBoard.boardState,"y-")){
+          for(int j=0;j<stoi(ships[i][1]);j++){
+            compBoard.boardState[yrand+j][xrand] = ships[i][0];
+          }
+          placed = true;
+        } else {
+          for(int j=stoi(ships[i][1]);j>0;j--){
+            compBoard.boardState[yrand-j][xrand] = ships[i][0];
+          }
+        }
+      }
+    }
   }
 
   
