@@ -10,8 +10,6 @@ class Board{
   void renderBoard();
   std::vector<std::vector<std::string>> getBoardState();
   std::vector<std::vector<std::string>> boardState;
-  
-  private:
   std::vector<std::string> toplineAlpha = {"a","b","c","d","e","f","g","h","i","j"};
   
 
