@@ -3,7 +3,7 @@
 #include <vector>
 #include "headers/User.h"
 
-bool isClear(int shipSize,int ypos,int xpos, std::vector<std::vector<std::string>> board,std::string direction){
+bool isClearUser(int shipSize,int ypos,int xpos, std::vector<std::vector<std::string>> board,std::string direction){
   if(direction == "x-"){
     for(int i=0;i<shipSize;i++){
       if(board[ypos][xpos+i] != " "){
@@ -106,41 +106,37 @@ void User::placeShips(std::vector<std::vector<std::string>> ships){
       std::cin >> startPos;
 
       std::string startPosx = startPos.substr(0,1);
-      std::string strPosx = startPosx;
+      std::string strPosx = removeWhitespace(startPosx);
       std::string startPosy = startPos.substr(1);
-      std::string strPosy = startPosy;
+      std::string strPosy = removeWhitespace(startPosy);
 
-      std::cout<<"What direction shoult it face:\n0.Up\n1.Down\n2.Left\n3.Right";
+      std::cout<<"What direction shoult it face:\n0.Up\n1.Down\n2.Left\n3.Right\nInput:";
 
       std::cin.clear();
       std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
       if(std::cin>>direction){
-        std::vector<std::string> directions = {"-y","y-","-x","-y"};
-        std::string dirStr = directions[direction];
 
         if(direction == 0){
-          if(isClear(stoi(selectedShip[1]), stoi(startPosy), stoi(startPosx), userBoard.boardState, "-y")){
-            
+          if(isClearUser(stoi(removeWhitespace(selectedShip[1])), stoi(startPosy), stoi(startPosx), userBoard.boardState, "-y")){
+            for(int j=stoi(selectedShip[1]);j>0;j--){
+                userBoard.boardState[stoi(strPosy)-j][stoi(strPosx)] = selectedShip[0].substr(0,1);
+              }
           }
         } else if(direction == 1){
-          if(isClear(stoi(selectedShip[1]), stoi(startPosy), stoi(startPosx), userBoard.boardState, "y-")){
-            if(isClear(stoi(selectedShip[1]), stoi(startPosy), stoi(startPosx), userBoard.boardState, "x-")){
+            if(isClearUser(stoi(removeWhitespace(selectedShip[1])), stoi(startPosy), stoi(startPosx), userBoard.boardState, "y-")){
               for(int j=0;j<stoi(selectedShip[1]);j++){
-                userBoard.boardState[stoi(strPosy)][stoi(strPosx)+j] = selectedShip[0].substr(0,1);
-              }
+                userBoard.boardState[stoi(strPosy)+j][stoi(strPosx)] = selectedShip[0].substr(0,1);
             }
           }
         } else if(direction == 2){
-          if(isClear(stoi(selectedShip[1]), stoi(startPosy), stoi(startPosx), userBoard.boardState, "-x")){
-            if(isClear(stoi(selectedShip[1]), stoi(startPosy), stoi(startPosx), userBoard.boardState, "x-")){
+          if(isClearUser(stoi(removeWhitespace(selectedShip[1])), stoi(startPosy), stoi(startPosx), userBoard.boardState, "-x")){
               for(int j=stoi(selectedShip[1]);j>0;j--){
                 userBoard.boardState[stoi(strPosy)][stoi(strPosx)-j] = selectedShip[0].substr(0,1);
               }
           }
-          }
         } else if(direction == 3){
-          if(isClear(stoi(selectedShip[1]), stoi(startPosy), stoi(startPosx), userBoard.boardState, "x-")){
+          if(isClearUser(stoi(removeWhitespace(selectedShip[1])), stoi(startPosy), stoi(startPosx), userBoard.boardState, "x-")){
             for(int j=0;j<stoi(selectedShip[1]);j++){
             userBoard.boardState[stoi(strPosy)][stoi(strPosx)+j] = selectedShip[0].substr(0,1);
             }
