@@ -6,7 +6,7 @@ class User{
   User();
   void setBoard(Board);
   void placeShips(std::vector<std::vector<std::string>>);
-
-  private:
+  void takeTurn(Board);
+  bool winner;
   Board userBoard;
 };

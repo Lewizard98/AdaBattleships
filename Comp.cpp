@@ -34,6 +34,7 @@ bool isClear(int shipSize,int ypos,int xpos, std::vector<std::vector<std::string
 }
 
 Comp::Comp(){
+  winner = false;
 }
 
 void Comp::setBoard(Board inpBoard){
@@ -85,5 +86,4 @@ void Comp::placeShips(std::vector<std::vector<std::string>> ships){
       yrand = rand() % compBoard.boardState[0].size();
     }
   }
-  compBoard.renderBoard();
 }

@@ -71,6 +71,7 @@ bool validYPosition(std::string startPos, Board userBoard){
 }
 
 User::User(){
+  winner = false;
 }
 
 void User::setBoard(Board inpBoard){
@@ -205,4 +206,8 @@ void User::placeShips(std::vector<std::vector<std::string>> ships){
       }
     }
   }
+}
+
+void User::takeTurn(){
+  std::cout << "\nIt is your turn...\nThe opponents board looks like this:\n"
 }
