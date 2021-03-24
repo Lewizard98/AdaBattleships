@@ -59,24 +59,24 @@ void Comp::placeShips(std::vector<std::vector<std::string>> ships){
       if(xOry != 1){
         if(xrand + stoi(ships[i][1]) <= 10 && isClear(stoi(ships[i][1]),yrand,xrand,    compBoard.boardState,"x-")){
           for(int j=0;j<stoi(ships[i][1]);j++){
-            compBoard.boardState[yrand][xrand+j] = ships[i][0];
+            compBoard.boardState[yrand][xrand+j] = ships[i][0].substr(0,1);
           }
           placed = true;
         } else if(isClear(stoi(ships[i][1]),yrand,xrand,compBoard.boardState,"-x")) {
           for(int j=stoi(ships[i][1]);j>0;j--){
-            compBoard.boardState[yrand][xrand-j] = ships[i][0];
+            compBoard.boardState[yrand][xrand-j] = ships[i][0].substr(0,1);
           }
           placed = true;
         }
       } else{
         if(yrand + stoi(ships[i][1]) <= 10 && isClear(stoi(ships[i][1]),yrand,xrand,        compBoard.boardState,"y-")){
           for(int j=0;j<stoi(ships[i][1]);j++){
-            compBoard.boardState[yrand+j][xrand] = ships[i][0];
+            compBoard.boardState[yrand+j][xrand] = ships[i][0].substr(0,1);
           }
           placed = true;
         } else if(isClear(stoi(ships[i][1]),yrand,xrand,compBoard.boardState,"-y")){
           for(int j=stoi(ships[i][1]);j>0;j--){
-            compBoard.boardState[yrand-j][xrand] = ships[i][0];
+            compBoard.boardState[yrand-j][xrand] = ships[i][0].substr(0,1);
           }
           placed = true;
         }
@@ -85,4 +85,5 @@ void Comp::placeShips(std::vector<std::vector<std::string>> ships){
       yrand = rand() % compBoard.boardState[0].size();
     }
   }
+  compBoard.renderBoard();
 }

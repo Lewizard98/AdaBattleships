@@ -6,7 +6,7 @@ Game::Game(){
 
   p2Board.generateBoard();
 
-  ships = {{"C","5"},{"B","4"},{"D","3"},{"S","3"},{"P","2"}};
+  ships = {{"Carrier","5"},{"Battleship","4"},{"Destroyer","3"},{"Submarine","3"},{"Patrol Boat","2"}};
 }
 
 void Game::gameMode1(){
