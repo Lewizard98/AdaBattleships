@@ -9,16 +9,10 @@ int User::startGameMenu(std::vector<std::vector<std::string>> ships){
 
         int continueInp;
 
-        std::cin.clear();
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-
         if(std::cin>> continueInp){
-          if(continueInp ==1){
-            return 1;
-          } else if(continueInp ==2){
-            return 2;
-          } else if(continueInp ==3){
-            return 3;
+          if(continueInp <=3 && continueInp >0){
+            return continueInp;
+            break;
           } else{
             std::cout<<"\nPlease enter a valid input...";
           }
@@ -27,7 +21,6 @@ int User::startGameMenu(std::vector<std::vector<std::string>> ships){
           std::cout<<"\nPlease enter a valid input...";
         }
         }
-        return 0;
 }
 
 //The function for checking if the location is clear for the ship to be placed, takes the start position, the length of the ship and the current state of the board
@@ -322,8 +315,13 @@ Board User::takeTurn(Board compBoard){
   int intxpos = 0;
 
   do{
-  std::cout <<"\n\n Please enter a location to fire a missle at...\nInput: ";
+  std::cout <<"\n\n Please enter a location to fire a missle at or press '0' to quit...\nInput: ";
   std::cin >> attack;
+
+  if(attack == "0"){
+    compBoard.boardState[0][0] = "0";
+    return compBoard;
+  }
 
   std::cin.clear();
   std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');

@@ -38,7 +38,6 @@ int Game::gameMode1(){
 
   do{
     gamestatus = userPlayer.placeShips(ships);
-    std::cout<<gamestatus;
     if(gamestatus == 3){
       return 1;
     }
@@ -57,6 +56,10 @@ int Game::gameMode1(){
     //The user will take a turn, using the method, whic returns a new board state which is assigned to the enemy as their board
     compPlayer.compBoard = userPlayer.takeTurn(compPlayer.compBoard);
     destroyed = compPlayer.compBoard.destroyed(ships);
+
+    if(compPlayer.compBoard.boardState[0][0] == "0"){
+      return 1;
+    }
 
     //Display list of enemy ships destroyed
     std::cout<<"\nEnemy ships destroyed:\n";
