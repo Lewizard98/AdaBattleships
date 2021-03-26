@@ -33,7 +33,7 @@ void Board::generateBoard(std::vector<std::string> boardConfig){
   for(int i=0;i<boardSize;i++){
 
     
-    if(i+1<10){
+    if(i+1<boardSize){
 
       line.push_back(std::to_string(i+1) +" ");
     } else {
@@ -50,7 +50,7 @@ void Board::generateBoard(std::vector<std::string> boardConfig){
 
 //Render the board with ship locations
 void Board::renderBoard(){
-  int boardSize = 10;
+  int boardSize = Board::boardState.size();
   int fullBoard = (boardSize+1)*2;
   for(int i=0;i<Board::boardState.size();i++){
     for(int j=0;j<Board::boardState[i].size();j++){
@@ -67,7 +67,7 @@ void Board::renderBoard(){
 
 //Display the board to the enemy, hiding ship locations
 void Board::renderOtherBoard(){
-int boardSize = 10;
+int boardSize = Board::boardState.size();
   int fullBoard = (boardSize+1)*2;
 
   for(int i=0;i<Board::boardState.size();i++){
