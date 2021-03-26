@@ -22,12 +22,14 @@ int Menu::getGameType(){
   while(true){
     std::cout << "[1]. Single Player Vs Computer" << std::endl
     << "[2]. Single Player Vs Computer(Salvo Mode)" << std::endl
-    << "[3]. Change Settings (config)" << std::endl
+    << "[3]. Player Vs Player" << std::endl
+    << "[4]. Player Vs Computer(Salvo Mode)" << std::endl
+    << "[5]. Change Settings (config)" << std::endl
     << "[0]. Quit" << std::endl << "Input: ";
 
     //Get the user input and check if it is valid. If it is break out of the loop
     if(std::cin >> menuInput){
-      if(menuInput <=3){
+      if(menuInput <=5){
         break;
       }
       invalidInput();
