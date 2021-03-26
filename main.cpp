@@ -30,9 +30,12 @@ int main() {
     } else if (gameType == 1){
       //I do this class here so it can be reset each loop
       Game game;
-      game.gameMode1();
-    } else if (gameType == 2){
+      game.gameMode1(false);
+    } else if (gameType == 3){
       iniParser.setConfig();
+    } else if (gameType == 2){
+      Game game;
+      game.gameMode1(true);
     }
     std::cout<<"\n\nReturning to menu...\n\n";
   }

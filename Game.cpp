@@ -18,7 +18,7 @@ Game::Game(){
 }
 
   // Player Vs Computer game mode
-int Game::gameMode1(){
+int Game::gameMode1(bool salvoMode){
     //Declare Variables
     std::vector<std::string> destroyed;
     std::string inp;
@@ -54,7 +54,12 @@ int Game::gameMode1(){
     std::cout<<"----------------YOUR TURN----------------------";
 
     //The user will take a turn, using the method, whic returns a new board state which is assigned to the enemy as their board
-    compPlayer.compBoard = userPlayer.takeTurn(compPlayer.compBoard);
+    destroyed = compPlayer.compBoard.destroyed(ships);
+    if(salvoMode){
+      for(int i = 0;i<ships.size();i++){
+        std::cout<<"\nSalvo Mode! You have " << ships.size() - destroyed.size() - i <<" shots remaning this round\n";
+
+        compPlayer.compBoard = userPlayer.takeTurn(compPlayer.compBoard);
     destroyed = compPlayer.compBoard.destroyed(ships);
 
     if(compPlayer.compBoard.boardState[0][0] == "0"){
@@ -76,6 +81,32 @@ int Game::gameMode1(){
       break;
     }
 
+      }
+    } else {
+      compPlayer.compBoard = userPlayer.takeTurn(compPlayer.compBoard);
+    destroyed = compPlayer.compBoard.destroyed(ships);
+
+    if(compPlayer.compBoard.boardState[0][0] == "0"){
+      return 1;
+    }
+
+    //Display list of enemy ships destroyed
+    std::cout<<"\nEnemy ships destroyed:\n";
+    for(int i=0;i<destroyed.size();i++){
+      std::cout<<destroyed[i]<<std::endl;
+    }
+
+
+    if(destroyed.size() == 0){
+      std::cout<<"None\n";
+    } else if(destroyed.size() == ships.size()){
+      //If all enemy ships are destroyed then you are the winner and the turn loop ends
+      std::cout<<"\nWINNER!!\n\n";
+      break;
+    }
+    }
+    
+
 
     //Give confirmation before ending the turn
     std::cout<<"End Turn?(Any input)";
@@ -85,6 +116,28 @@ int Game::gameMode1(){
     std::cout<<"----------------ENEMY TURN----------------------";
 
     //This is the computer taking a turn and assigning the new board state to the player
+    destroyed = userPlayer.userBoard.destroyed(ships);
+    if(salvoMode){
+      for(int i = 0;i<ships.size();i++){
+        std::cout<<"\nSalvo Mode! Enemy has " << ships.size() - destroyed.size() - i <<" shots remaning this round\n";
+        userPlayer.userBoard = compPlayer.takeTurn(userPlayer.userBoard);
+
+    destroyed = userPlayer.userBoard.destroyed(ships);
+    std::cout<<"\nYour ships destroyed:\n";
+    for(int i=0;i<destroyed.size();i++){
+      std::cout<<destroyed[i]<<std::endl;
+    }
+
+    if(destroyed.size() == 0){
+      std::cout<<"None\n";
+    } else if(destroyed.size() == ships.size()){
+      //If all of your ships are destroyed you are the loser
+      std::cout<<"\nLOSER!!\n\n";
+      break;
+    }
+    }
+    
+  } else {
     userPlayer.userBoard = compPlayer.takeTurn(userPlayer.userBoard);
 
     destroyed = userPlayer.userBoard.destroyed(ships);
@@ -100,6 +153,7 @@ int Game::gameMode1(){
       std::cout<<"\nLOSER!!\n\n";
       break;
     }
+  }
   }
   return 0;
 }

@@ -6,7 +6,7 @@
 class Game{
   public:
   Game();
-  int gameMode1();
+  int gameMode1(bool);
 
   private:
   Board p1Board;
