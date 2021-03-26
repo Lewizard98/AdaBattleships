@@ -102,16 +102,18 @@ int User::placeShips(std::vector<std::vector<std::string>> ships){
   userBoard.renderBoard();
 
   while(ships.size() > 0){
-    std::cout<<std::endl<<std::endl<<"Please select which ship you want to place:\n";
+    
     bool shipPlaced = false;
+
+
+    while(shipPlaced == false){
+
+      std::cout<<std::endl<<std::endl<<"Please select which ship you want to place:\n";
+    
     for(int i=1;i<=ships.size();i++){
       std::cout<< i << ". " << ships[i-1][0] << " Size:" << ships[i-1][1] <<std::endl;
     }
     std::cout<< "0. Auto-place ships\n";
-
-
-
-    while(shipPlaced == false){
 
       std::string startPosx;
       std::string strPosx;

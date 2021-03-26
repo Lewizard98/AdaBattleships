@@ -6,14 +6,20 @@ int main() {
   int gameType;
   Menu menu;
 
-  gameType = menu.getGameType();
+  while(true){
+    gameType = menu.getGameType();
 
-  if (gameType == 0){
-    std::cout << std::endl << "Okay, Thanks for playing Ada Battleships :)";
-  } else if (gameType == 1){
-    Game game;
-    game.gameMode1();
+    if (gameType == 0){
+      std::cout << std::endl << "Okay, Thanks for playing Ada Battleships :)";
+      break;
+    } else if (gameType == 1){
+      Game game;
+      game.gameMode1();
+    }
+    std::cout<<"\n\nReturning to menu...\n\n";
   }
+
+  
 
   return 0;
 }

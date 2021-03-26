@@ -24,15 +24,12 @@ void Game::gameMode1(){
   std::cout<<std::endl<<"It is your turn to place your ships"<<std::endl;
   userPlayer.setBoard(p1Board);
   userPlayer.placeShips(ships);
-
-  int winner = 0;
   std::vector<std::string> destroyed;
 
   std::string inp;
 
+
   while(true){
-
-
 
     std::cout<<"Start Turn?(Any input)";
     std::cin>>inp;
