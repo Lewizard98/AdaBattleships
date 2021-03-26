@@ -18,7 +18,7 @@ Game::Game(){
 }
 
   // Player Vs Computer game mode
-void Game::gameMode1(){
+int Game::gameMode1(){
     //Declare Variables
     std::vector<std::string> destroyed;
     std::string inp;
@@ -34,7 +34,15 @@ void Game::gameMode1(){
   //After that the Player will place their ships
   std::cout<<std::endl<<"It is your turn to place your ships"<<std::endl;
   userPlayer.setBoard(p1Board);
-  userPlayer.placeShips(ships);
+  int gamestatus;
+
+  do{
+    gamestatus = userPlayer.placeShips(ships);
+    std::cout<<gamestatus;
+    if(gamestatus == 3){
+      return 1;
+    }
+  }while(gamestatus == 2);
 
   //Play a turn, each turn is made up of the player turn and the computer turn
   while(true){
@@ -90,4 +98,5 @@ void Game::gameMode1(){
       break;
     }
   }
+  return 0;
 }

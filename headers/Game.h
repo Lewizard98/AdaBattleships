@@ -6,7 +6,7 @@
 class Game{
   public:
   Game();
-  void gameMode1();
+  int gameMode1();
 
   private:
   Board p1Board;

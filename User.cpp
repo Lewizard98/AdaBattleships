@@ -3,6 +3,33 @@
 #include <vector>
 #include "headers/User.h"
 
+int User::startGameMenu(std::vector<std::vector<std::string>> ships){
+  while(true){
+        std::cout<<"\n\nAre you happy with this ship placement?\n1.Start Game\n2.Reset Ships\n3.Quit\nInput: ";
+
+        int continueInp;
+
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+        if(std::cin>> continueInp){
+          if(continueInp ==1){
+            return 1;
+          } else if(continueInp ==2){
+            return 2;
+          } else if(continueInp ==3){
+            return 3;
+          } else{
+            std::cout<<"\nPlease enter a valid input...";
+          }
+
+        } else {
+          std::cout<<"\nPlease enter a valid input...";
+        }
+        }
+        return 0;
+}
+
 //The function for checking if the location is clear for the ship to be placed, takes the start position, the length of the ship and the current state of the board
 bool isClearUser(int shipSize,int ypos,int xpos, std::vector<std::vector<std::string>> board,std::string direction){
   if(direction == "x-"){
@@ -97,7 +124,7 @@ int User::placeShips(std::vector<std::vector<std::string>> ships){
     userBoard.renderBoard();
     std::cin.clear();
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    return 0;
+    return startGameMenu(ships);
   }
 
   std::cin.clear();
@@ -124,15 +151,12 @@ int User::placeShips(std::vector<std::vector<std::string>> ships){
       std::string strPosy;
       std::vector<std::string> topLine;
       int intxpos;
-
       if(!(std::cin >> selectShip)){
         std::cout<<"\nPlease enter a valid input...\n";
       }else if(selectShip == 0){
         autoPlaceShips(ships);
         userBoard.renderBoard();
-        std::cin.clear();
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        return 0;
+        return startGameMenu(ships);
       }else if(selectShip <= ships.size()){
         std::vector<std::string> selectedShip = ships[selectShip-1]; 
         
@@ -234,7 +258,8 @@ int User::placeShips(std::vector<std::vector<std::string>> ships){
       }
     }
   }
-  return 0;
+
+  return startGameMenu(ships);
 }
 
 //Method to auto place the ships, this is similar to the method to auto place the ships on the Comp class

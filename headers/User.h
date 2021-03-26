@@ -7,6 +7,7 @@ class User{
   void setBoard(Board);
   int placeShips(std::vector<std::vector<std::string>>);
   void autoPlaceShips(std::vector<std::vector<std::string>>);
+  int startGameMenu(std::vector<std::vector<std::string>>);
   Board takeTurn(Board);
   Board userBoard;
 };
