@@ -271,8 +271,66 @@ void User::autoPlaceShips(std::vector<std::vector<std::string>> ships){
 }
 
 void User::takeTurn(Board compBoard){
-  std::cout << "\nIt is your turn...\nThe opponents board looks like this:\n";
-  
+  std::cout << "\nIt is your turn...\nThe opponents board looks like this:\n\n";
   compBoard.renderOtherBoard();
 
+  std::string attack;
+  std::string attackx;
+  std::string strAttackx;
+  std::string attacky;
+  std::string strAttacky;
+
+  do{
+  std::cout <<"\n\n Please enter a location to fire a missle at...\nInput: ";
+
+  
+
+
+  std::cin >> attack;
+
+  std::cin.clear();
+  std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+  attackx = attack.substr(0,1);
+  strAttackx = removeWhitespace(attackx);
+  attacky = attack.substr(1);
+  strAttacky = removeWhitespace(attacky);
+  std::vector<std::string> topLine = userBoard.toplineAlpha;
+  int intxpos = 0;
+
+  for(int k=0;k<topLine.size();k++){
+          if(topLine[k] == strAttackx){
+            intxpos = k+1;
+          }
+        }
+
+        if(stoi(strAttacky) <= 10 && intxpos != 0){
+          break;
+        }
+        std::cout<<"\nInvalid input...\n";
+  }while(true);
+
+  do{
+    std::string target = compBoard.boardState[stoi(strAttacky)][stoi(strAttackx)];
+    if( target != " "){
+      if(target == "X" || target == "O"){
+        std::cout<<"\nYou have already attacked that location...";
+      } else {
+        std::cout <<"\nHIT!!!";
+        compBoard.boardState[stoi(strAttacky)][stoi(strAttackx)] = "X";
+        for(int i=0;i<compBoard.boardState.size();i++){
+          for(int j=0;j<compBoard.boardState[i].size();j++){
+            
+          }
+        }
+        break;
+      }
+  } else {
+    std::cout <<"\MISS!!!";
+    compBoard.boardState[stoi(strAttacky)][stoi(strAttackx)] = "O";
+    break;
+  }
+  }while(true);
+
+  
 }
