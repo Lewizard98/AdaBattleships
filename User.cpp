@@ -86,7 +86,7 @@ int User::placeShips(std::vector<std::vector<std::string>> ships){
 
   std::cin.clear();
   std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-  std::cout<< "\nWould you like to auto-place ships?\n1. Auto-place\nAny Key. I want to place them\nInput: ";
+  std::cout<< "\nWould you like to auto-place ships?\n0-9. Auto-place\nAny other Key. I want to place them\nInput: ";
   if(std::cin >> autoPlaceQ){
     autoPlaceShips(ships);
     userBoard.renderBoard();
@@ -94,7 +94,6 @@ int User::placeShips(std::vector<std::vector<std::string>> ships){
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     return 0;
   }
-
 
   std::cin.clear();
   std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -123,7 +122,13 @@ int User::placeShips(std::vector<std::vector<std::string>> ships){
 
       if(!(std::cin >> selectShip)){
         std::cout<<"\nPlease enter a valid input...\n";
-      }else if(selectShip < ships.size()){
+      }else if(selectShip == 0){
+        autoPlaceShips(ships);
+        userBoard.renderBoard();
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        return 0;
+      }else if(selectShip <= ships.size()){
         std::vector<std::string> selectedShip = ships[selectShip-1]; 
         
         do{
@@ -207,7 +212,7 @@ int User::placeShips(std::vector<std::vector<std::string>> ships){
 
       
 
-      } else {
+      }else {
         std::cout<<"\nPlease enter a valid input...\n";
         break;
       }
@@ -216,7 +221,7 @@ int User::placeShips(std::vector<std::vector<std::string>> ships){
 
       userBoard.renderBoard();
       if(shipPlaced){
-        ships.erase(ships.begin()+selectShip);
+        ships.erase(ships.begin()+(selectShip-1));
       }
     }
   }
@@ -330,7 +335,7 @@ Board User::takeTurn(Board compBoard){
   }
 
   std::cout<<"Enemy Boared...\n";
-  compBoard.renderBoard();
+  compBoard.renderOtherBoard();
 
   return compBoard;
   
