@@ -7,6 +7,5 @@ class Comp{
   void setBoard(Board);
   void placeShips(std::vector<std::vector<std::string>>);
   Board takeTurn(Board);
-  bool winner;
   Board compBoard;
 };

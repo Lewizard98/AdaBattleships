@@ -3,6 +3,7 @@
 #include <vector>
 #include "headers/Comp.h"
 
+//Funcion to check if the area is clear for placing a ship, taking the start position, the length of the ship, and what direction it is facing. Returns false if the ship will not fit and true if it will
 bool isClear(int shipSize,int ypos,int xpos, std::vector<std::vector<std::string>> board,std::string direction){
   if(direction == "x-"){
     for(int i=0;i<shipSize;i++){
@@ -29,19 +30,21 @@ bool isClear(int shipSize,int ypos,int xpos, std::vector<std::vector<std::string
       }
     }
   }
-
   return true;
 }
 
+//Empty Constructor
 Comp::Comp(){
-  winner = false;
 }
 
+//Set the new board state
 void Comp::setBoard(Board inpBoard){
   compBoard = inpBoard;
 }
 
+//Randomly placing the ships
 void Comp::placeShips(std::vector<std::vector<std::string>> ships){
+  //For the randomization
   srand((unsigned int)time(NULL));
   int xrand;
   int yrand;
@@ -55,7 +58,6 @@ void Comp::placeShips(std::vector<std::vector<std::string>> ships){
 
     while(!placed){
       xOry = rand() % 2;
-    //compBoard.boardState[yrand][xrand] = ships[i][0];
 
       if(xOry != 1){
         if(xrand + stoi(ships[i][1]) <= 10 && isClear(stoi(ships[i][1]),yrand,xrand,    compBoard.boardState,"x-")){
@@ -97,14 +99,16 @@ void printAttack(int xrand, int yrand, Board userBoard){
   }
 }
 
+//The computer takes it's turn
 Board Comp::takeTurn(Board userBoard){
-  std::cout << "\nIt is your opponents turn...\n\n";
 
   int xrand;
   int yrand;
 
+  std::cout << "\nIt is your opponents turn...\n\n";
   std::cout <<"\n\n Your opponent has fired a missle at...\n";
 
+  //Loop through each time the computer chooses a bad place to attack. This ganatees it will always shoot somewhere it has not attacked before
   while(true){
   
     xrand = (rand() % userBoard.boardState[0].size());
@@ -128,6 +132,7 @@ Board Comp::takeTurn(Board userBoard){
     }
   }
 
+  //Display the board after the attack
   std::cout<<"Your Board...\n";
   userBoard.renderBoard();
 

@@ -4,15 +4,18 @@
 #include <vector>
 #include <string>
 
+//Function for printing the lines of the board
 void printLine(int fullBoard){
   for(int i=0;i<fullBoard+1;i++){
      std::cout<<"-";
   }
 }
 
+//Empty Constructor
 Board::Board(){
 }
 
+//Generate the board based on size
 void Board::generateBoard(){
   int boardSize = 10;
   int fullBoard = (boardSize+1)*2;
@@ -45,6 +48,7 @@ void Board::generateBoard(){
   }
 }
 
+//Render the board with ship locations
 void Board::renderBoard(){
   int boardSize = 10;
   int fullBoard = (boardSize+1)*2;
@@ -61,6 +65,7 @@ void Board::renderBoard(){
   std::cout<<std::endl<<std::endl;
 }
 
+//Display the board to the enemy, hiding ship locations
 void Board::renderOtherBoard(){
 int boardSize = 10;
   int fullBoard = (boardSize+1)*2;
@@ -83,10 +88,7 @@ int boardSize = 10;
   std::cout<<std::endl<<std::endl;
 }
 
-std::vector<std::vector<std::string>> Board::getBoardState(){
-  return Board::boardState;
-}
-
+//Checks the board and returns a list of destroyed ships
 std::vector<std::string> Board::destroyed(std::vector<std::vector<std::string>>ships){
 
   std::vector<std::string> shipsGone = {};

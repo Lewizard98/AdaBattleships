@@ -3,6 +3,7 @@
 #include <vector>
 #include "headers/User.h"
 
+//The function for checking if the location is clear for the ship to be placed, takes the start position, the length of the ship and the current state of the board
 bool isClearUser(int shipSize,int ypos,int xpos, std::vector<std::vector<std::string>> board,std::string direction){
   if(direction == "x-"){
     for(int i=0;i<shipSize;i++){
@@ -29,10 +30,10 @@ bool isClearUser(int shipSize,int ypos,int xpos, std::vector<std::vector<std::st
       }
     }
   }
-
   return true;
 }
 
+//This function removes whitespace from an input string - This is part of a bug fix
 std::string removeWhitespace(std::string str){
   std::string newstr;
 
@@ -44,6 +45,7 @@ std::string removeWhitespace(std::string str){
   return newstr;
 }
 
+//This function checks if a position is a valid x position on the board
 bool validXPosition(std::string startPos, Board userBoard){
   std::string startPosL = startPos.substr(0,1);
   std::string strPos = removeWhitespace(userBoard.boardState[1][0]);
@@ -57,6 +59,7 @@ bool validXPosition(std::string startPos, Board userBoard){
   return xmatch;
 }
 
+//This function checks if a position is a valid y position on the board
 bool validYPosition(std::string startPos, Board userBoard){
   std::string startPosN = startPos.substr(1);
   std::string strPos = removeWhitespace(userBoard.boardState[1][0]);
@@ -70,14 +73,16 @@ bool validYPosition(std::string startPos, Board userBoard){
   return ymatch;
 }
 
+//Empty Constructor
 User::User(){
-  winner = false;
 }
 
+//Giving the board a new state
 void User::setBoard(Board inpBoard){
   userBoard = inpBoard;
 }
 
+//Function to place the ships
 int User::placeShips(std::vector<std::vector<std::string>> ships){
   int selectShip;
   int direction;
@@ -97,14 +102,12 @@ int User::placeShips(std::vector<std::vector<std::string>> ships){
 
   std::cin.clear();
   std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-
   std::cout<<std::endl<<"This is your current board..."<<std::endl;
   userBoard.renderBoard();
 
   while(ships.size() > 0){
     
     bool shipPlaced = false;
-
 
     while(shipPlaced == false){
 
@@ -134,32 +137,30 @@ int User::placeShips(std::vector<std::vector<std::string>> ships){
         std::vector<std::string> selectedShip = ships[selectShip-1]; 
         
         do{
-        std::cout << "Please choose a place for the " << selectedShip[0] << std::endl;
-        std::cout << "Example: a1\nInput: ";
+          std::cout << "Please choose a place for the " << selectedShip[0] << std::endl;
+          std::cout << "Example: a1\nInput: ";
       
-        std::cin.clear();
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+          std::cin.clear();
+          std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
-        std::cin >> startPos;
+          std::cin >> startPos;
 
-        startPosx = startPos.substr(0,1);
-        strPosx = removeWhitespace(startPosx);
-        startPosy = startPos.substr(1);
-        strPosy = removeWhitespace(startPosy);
-        topLine = userBoard.toplineAlpha;
+          startPosx = startPos.substr(0,1);
+          strPosx = removeWhitespace(startPosx);
+          startPosy = startPos.substr(1);
+          strPosy = removeWhitespace(startPosy);
+          topLine = userBoard.toplineAlpha;
 
-        
-      
-        for(int k=0;k<topLine.size();k++){
-          if(topLine[k] == strPosx){
-            intxpos = k+1;
+          for(int k=0;k<topLine.size();k++){
+            if(topLine[k] == strPosx){
+              intxpos = k+1;
+            }
           }
-        }
 
-        if(stoi(startPosy) <= 10 && intxpos != 0){
-          break;
-        }
-        std::cout<< "\nInvalid Input, please enter a location on the board...\n";
+          if(stoi(startPosy) <= 10 && intxpos != 0){
+            break;
+          }
+          std::cout<< "\nInvalid Input, please enter a location on the board...\n";
         }while(true);
 
         std::cout<<"What direction shoult it face:\n0.Up\n1.Down\n2.Left\n3.Right\nInput:";
@@ -170,11 +171,14 @@ int User::placeShips(std::vector<std::vector<std::string>> ships){
         if(std::cin>>direction){
 
           if(direction == 0){
+
             if(isClearUser(stoi(removeWhitespace(selectedShip[1])), stoi(startPosy), intxpos, userBoard.boardState, "-y")){
+
               for(int j=stoi(selectedShip[1]);j>0;j--){
                 userBoard.boardState[stoi(strPosy)-j+1][intxpos] = selectedShip[0].substr(0,1);
               }
               shipPlaced = true;
+
             } else{
               std::cout<<std::endl<<"No space here, try a different ship or position/direction...\n\n";
             }
@@ -230,6 +234,7 @@ int User::placeShips(std::vector<std::vector<std::string>> ships){
   return 0;
 }
 
+//Method to auto place the ships, this is similar to the method to auto place the ships on the Comp class
 void User::autoPlaceShips(std::vector<std::vector<std::string>> ships){
   srand((unsigned int)time(NULL));
   int xrand;
@@ -244,7 +249,6 @@ void User::autoPlaceShips(std::vector<std::vector<std::string>> ships){
 
     while(!placed){
       xOry = rand() % 2;
-    //compBoard.boardState[yrand][xrand] = ships[i][0];
 
       if(xOry != 1){
         if(xrand + stoi(ships[i][1]) <= 10 && isClearUser(stoi(ships[i][1]),yrand,xrand,    userBoard.boardState,"x-")){
@@ -277,6 +281,7 @@ void User::autoPlaceShips(std::vector<std::vector<std::string>> ships){
   }
 }
 
+//User take the turn Method
 Board User::takeTurn(Board compBoard){
   std::cout << "\nIt is your turn...\nThe opponents board looks like this:\n\n";
   compBoard.renderOtherBoard();
@@ -290,10 +295,6 @@ Board User::takeTurn(Board compBoard){
 
   do{
   std::cout <<"\n\n Please enter a location to fire a missle at...\nInput: ";
-
-  
-
-
   std::cin >> attack;
 
   std::cin.clear();
@@ -305,7 +306,6 @@ Board User::takeTurn(Board compBoard){
   strAttacky = removeWhitespace(attacky);
   std::vector<std::string> topLine = userBoard.toplineAlpha;
   
-
   for(int k=0;k<topLine.size();k++){
           if(topLine[k] == strAttackx){
             intxpos = k+1;
@@ -316,7 +316,6 @@ Board User::takeTurn(Board compBoard){
         }
         std::cout<<"\nInvalid input...\n";
   }while(true);
-
 
     std::string target = compBoard.boardState[stoi(strAttacky)][intxpos];
     if( target != " "){

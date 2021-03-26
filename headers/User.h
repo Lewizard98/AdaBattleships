@@ -8,6 +8,5 @@ class User{
   int placeShips(std::vector<std::vector<std::string>>);
   void autoPlaceShips(std::vector<std::vector<std::string>>);
   Board takeTurn(Board);
-  bool winner;
   Board userBoard;
 };

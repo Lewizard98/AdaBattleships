@@ -14,6 +14,4 @@ class Game{
   Comp compPlayer;
   User userPlayer;
   std::vector<std::vector<std::string>> ships;
-  int p1Points;
-  int p2Points;
 };
