@@ -157,9 +157,12 @@ int User::placeShips(std::vector<std::vector<std::string>> ships){
             }
           }
 
-          if(stoi(startPosy) <= 10 && intxpos != 0){
-            break;
+          try{
+            if(stoi(startPosy) <= 10 && intxpos != 0){
+              break;
           }
+          } catch(std::invalid_argument& e){}
+
           std::cout<< "\nInvalid Input, please enter a location on the board...\n";
         }while(true);
 
@@ -311,9 +314,11 @@ Board User::takeTurn(Board compBoard){
             intxpos = k+1;
           }
         }
-        if(stoi(strAttacky) <= 10 && intxpos != 0){
-          break;
-        }
+        try{
+          if(stoi(strAttacky) <= 10 && intxpos != 0){
+            break;
+          }
+        } catch(std::invalid_argument& e){}
         std::cout<<"\nInvalid input...\n";
   }while(true);
 
