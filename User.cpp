@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <vector>
 #include "headers/User.h"
+#include "headers/IniParser.h"
 
 int User::startGameMenu(std::vector<std::vector<std::string>> ships){
   while(true){
@@ -104,6 +105,11 @@ void User::setBoard(Board inpBoard){
 
 //Function to place the ships
 int User::placeShips(std::vector<std::vector<std::string>> ships){
+  IniParser iniParser;
+  iniParser.CheckFileExists();
+  iniParser.getConfig();
+
+  int boardSize = stoi(iniParser.boardConfig[0]);
   int selectShip;
   int direction;
   std::string startPos;
@@ -175,7 +181,7 @@ int User::placeShips(std::vector<std::vector<std::string>> ships){
           }
 
           try{
-            if(stoi(startPosy) <= 10 && intxpos != 0){
+            if(stoi(startPosy) <= boardSize && intxpos != 0){
               break;
           }
           } catch(std::invalid_argument& e){}
@@ -257,6 +263,11 @@ int User::placeShips(std::vector<std::vector<std::string>> ships){
 
 //Method to auto place the ships, this is similar to the method to auto place the ships on the Comp class
 void User::autoPlaceShips(std::vector<std::vector<std::string>> ships){
+  IniParser iniParser;
+  iniParser.CheckFileExists();
+  iniParser.getConfig();
+
+  int boardSize = stoi(iniParser.boardConfig[0]);
   srand((unsigned int)time(NULL));
   int xrand;
   int yrand;
@@ -272,7 +283,7 @@ void User::autoPlaceShips(std::vector<std::vector<std::string>> ships){
       xOry = rand() % 2;
 
       if(xOry != 1){
-        if(xrand + stoi(ships[i][1]) <= 10 && isClearUser(stoi(ships[i][1]),yrand,xrand,    userBoard.boardState,"x-")){
+        if(xrand + stoi(ships[i][1]) <= boardSize && isClearUser(stoi(ships[i][1]),yrand,xrand,    userBoard.boardState,"x-")){
           for(int j=0;j<stoi(ships[i][1]);j++){
             userBoard.boardState[yrand][xrand+j] = ships[i][0].substr(0,1);
           }
@@ -284,7 +295,7 @@ void User::autoPlaceShips(std::vector<std::vector<std::string>> ships){
           placed = true;
         }
       } else{
-        if(yrand + stoi(ships[i][1]) <= 10 && isClearUser(stoi(ships[i][1]),yrand,xrand,        userBoard.boardState,"y-")){
+        if(yrand + stoi(ships[i][1]) <= boardSize && isClearUser(stoi(ships[i][1]),yrand,xrand,        userBoard.boardState,"y-")){
           for(int j=0;j<stoi(ships[i][1]);j++){
             userBoard.boardState[yrand+j][xrand] = ships[i][0].substr(0,1);
           }
@@ -304,6 +315,11 @@ void User::autoPlaceShips(std::vector<std::vector<std::string>> ships){
 
 //User take the turn Method
 Board User::takeTurn(Board compBoard){
+  IniParser iniParser;
+  iniParser.CheckFileExists();
+  iniParser.getConfig();
+
+  int boardSize = stoi(iniParser.boardConfig[0]);
   std::cout << "\nIt is your turn...\nThe opponents board looks like this:\n\n";
   compBoard.renderOtherBoard();
 
@@ -315,7 +331,7 @@ Board User::takeTurn(Board compBoard){
   int intxpos = 0;
 
   do{
-  std::cout <<"\n\n Please enter a location to fire a missle at or press '0' to quit...\nInput: ";
+  std::cout<<"\n\n Please enter a location to fire a missle at or press '0' to quit...\nInput: ";
   std::cin >> attack;
 
   if(attack == "0"){
@@ -338,7 +354,7 @@ Board User::takeTurn(Board compBoard){
           }
         }
         try{
-          if(stoi(strAttacky) <= 10 && intxpos != 0){
+          if(stoi(strAttacky) <= boardSize && intxpos != 0){
             break;
           }
         } catch(std::invalid_argument& e){}

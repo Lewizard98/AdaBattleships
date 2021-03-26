@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <vector>
 #include "headers/Comp.h"
+#include "headers/IniParser.h"
 
 //Funcion to check if the area is clear for placing a ship, taking the start position, the length of the ship, and what direction it is facing. Returns false if the ship will not fit and true if it will
 bool isClear(int shipSize,int ypos,int xpos, std::vector<std::vector<std::string>> board,std::string direction){
@@ -44,6 +45,12 @@ void Comp::setBoard(Board inpBoard){
 
 //Randomly placing the ships
 void Comp::placeShips(std::vector<std::vector<std::string>> ships){
+    IniParser iniParser;
+    iniParser.CheckFileExists();
+    iniParser.getConfig();
+
+    int boardSize = stoi(iniParser.boardConfig[0]);
+
   //For the randomization
   srand((unsigned int)time(NULL));
   int xrand;
@@ -60,7 +67,7 @@ void Comp::placeShips(std::vector<std::vector<std::string>> ships){
       xOry = rand() % 2;
 
       if(xOry != 1){
-        if(xrand + stoi(ships[i][1]) <= 10 && isClear(stoi(ships[i][1]),yrand,xrand,    compBoard.boardState,"x-")){
+        if(xrand + stoi(ships[i][1]) <= boardSize && isClear(stoi(ships[i][1]),yrand,xrand,    compBoard.boardState,"x-")){
           for(int j=0;j<stoi(ships[i][1]);j++){
             compBoard.boardState[yrand][xrand+j] = ships[i][0].substr(0,1);
           }
@@ -72,7 +79,7 @@ void Comp::placeShips(std::vector<std::vector<std::string>> ships){
           placed = true;
         }
       } else{
-        if(yrand + stoi(ships[i][1]) <= 10 && isClear(stoi(ships[i][1]),yrand,xrand,        compBoard.boardState,"y-")){
+        if(yrand + stoi(ships[i][1]) <= boardSize && isClear(stoi(ships[i][1]),yrand,xrand,        compBoard.boardState,"y-")){
           for(int j=0;j<stoi(ships[i][1]);j++){
             compBoard.boardState[yrand+j][xrand] = ships[i][0].substr(0,1);
           }

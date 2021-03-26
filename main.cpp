@@ -5,6 +5,8 @@
 
 int main() {
 
+
+
   //Declaring variables 
   int gameType;
 
@@ -14,6 +16,10 @@ int main() {
 
   //A loot so the user can keep playing games untill they choose to quit
   while(true){
+
+    IniParser iniParser;
+    iniParser.CheckFileExists();
+    iniParser.getConfig();
     //Run the menu method to get the game type
     gameType = menu.getGameType();
 
@@ -25,6 +31,8 @@ int main() {
       //I do this class here so it can be reset each loop
       Game game;
       game.gameMode1();
+    } else if (gameType == 2){
+      iniParser.setConfig();
     }
     std::cout<<"\n\nReturning to menu...\n\n";
   }

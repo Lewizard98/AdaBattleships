@@ -76,3 +76,38 @@ void IniParser::getConfig(){
     shipsConfig.push_back(splitFileLine(parsedFile[i]));
   }
 }
+
+std::string IniParser::BuildNewConfigBoard(std::string newSize){
+  std::string newConfig;
+
+  newConfig += "Board: " + newSize + "x" + newSize + "\nBoat: Carrier,5\nBoat: Battleship,4\nBoat: Destroyer,3\nBoat: Submarine,3\nBoat: Patrol Boat,2";
+
+  return newConfig;
+}
+
+void IniParser::setConfig(){
+
+  int newSize;
+
+  while(true){
+  std::cout<<"\nChange board size...\nCurrently: " << boardConfig[0] << "x" << boardConfig[1] << "\nChange to what size?(5 Min - 80 Max)\nInput:";
+
+  std::cin.clear();
+  std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+  if(std::cin >> newSize){
+    if(newSize <5 || newSize >80){
+    std::cout<<"\nPlease enter a value between 5 and 80\n";
+    } else{
+      break;
+    }
+  } else {
+    std::cout<<"\nPlease enter a value between 5 and 80\n";
+  }
+  }
+
+  std::ofstream file;
+  file.open(fileName);
+  file << IniParser::BuildNewConfigBoard(std::to_string(newSize));
+  file.close();
+}
