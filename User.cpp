@@ -270,7 +270,7 @@ void User::autoPlaceShips(std::vector<std::vector<std::string>> ships){
   }
 }
 
-void User::takeTurn(Board compBoard){
+Board User::takeTurn(Board compBoard){
   std::cout << "\nIt is your turn...\nThe opponents board looks like this:\n\n";
   compBoard.renderOtherBoard();
 
@@ -279,6 +279,7 @@ void User::takeTurn(Board compBoard){
   std::string strAttackx;
   std::string attacky;
   std::string strAttacky;
+  int intxpos = 0;
 
   do{
   std::cout <<"\n\n Please enter a location to fire a missle at...\nInput: ";
@@ -296,41 +297,41 @@ void User::takeTurn(Board compBoard){
   attacky = attack.substr(1);
   strAttacky = removeWhitespace(attacky);
   std::vector<std::string> topLine = userBoard.toplineAlpha;
-  int intxpos = 0;
+  
 
   for(int k=0;k<topLine.size();k++){
           if(topLine[k] == strAttackx){
             intxpos = k+1;
           }
         }
-
         if(stoi(strAttacky) <= 10 && intxpos != 0){
           break;
         }
         std::cout<<"\nInvalid input...\n";
   }while(true);
 
-  do{
-    std::string target = compBoard.boardState[stoi(strAttacky)][stoi(strAttackx)];
+
+    std::string target = compBoard.boardState[stoi(strAttacky)][intxpos];
     if( target != " "){
       if(target == "X" || target == "O"){
-        std::cout<<"\nYou have already attacked that location...";
+        std::cout<<"\nYou have already attacked that location... so this is a MISS!!\n\n";
       } else {
-        std::cout <<"\nHIT!!!";
-        compBoard.boardState[stoi(strAttacky)][stoi(strAttackx)] = "X";
+        std::cout <<"\nHIT!!\n\n";
+        compBoard.boardState[stoi(strAttacky)][intxpos] = "X";
         for(int i=0;i<compBoard.boardState.size();i++){
           for(int j=0;j<compBoard.boardState[i].size();j++){
             
           }
         }
-        break;
       }
   } else {
-    std::cout <<"\MISS!!!";
-    compBoard.boardState[stoi(strAttacky)][stoi(strAttackx)] = "O";
-    break;
+    compBoard.boardState[stoi(strAttacky)][intxpos] = "O";
+    std::cout <<"\nMISS!!\n\n";
   }
-  }while(true);
 
+  std::cout<<"Enemy Boared...\n";
+  compBoard.renderBoard();
+
+  return compBoard;
   
 }

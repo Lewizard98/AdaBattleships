@@ -87,3 +87,50 @@ void Comp::placeShips(std::vector<std::vector<std::string>> ships){
     }
   }
 }
+
+void printAttack(int xrand, int yrand, Board userBoard){
+
+  for(int i = 1;i<userBoard.boardState[0].size();i++){
+    if(i == xrand){
+      std::cout<<userBoard.boardState[0][i]<<yrand<<std::endl;
+    }
+  }
+}
+
+Board Comp::takeTurn(Board userBoard){
+  std::cout << "\nIt is your opponents turn...\n\n";
+
+  int xrand;
+  int yrand;
+
+  std::cout <<"\n\n Your opponent has fired a missle at...\n";
+
+  while(true){
+  
+    xrand = (rand() % userBoard.boardState[0].size());
+    yrand = (rand() % userBoard.boardState[0].size());
+
+    if (xrand == 0){xrand++;}
+    if (yrand == 0){yrand++;}
+
+    if(userBoard.boardState[yrand][xrand] == " "){
+      userBoard.boardState[yrand][xrand] = "O";
+      printAttack(xrand,yrand,userBoard);
+      std::cout<<"They Missed!\n";
+      break;
+    } else if(userBoard.boardState[yrand][xrand] == "O"||userBoard.boardState[yrand][xrand] == "X"){
+
+    } else{
+      userBoard.boardState[yrand][xrand] = "X";
+      printAttack(xrand,yrand,userBoard);
+      std::cout<<"They Hit!\n";
+      break;
+    }
+  }
+
+  std::cout<<"Your Board...\n";
+  userBoard.renderBoard();
+
+  return userBoard;
+} 
+

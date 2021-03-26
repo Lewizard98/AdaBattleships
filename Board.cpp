@@ -87,3 +87,23 @@ std::vector<std::vector<std::string>> Board::getBoardState(){
   return Board::boardState;
 }
 
+std::vector<std::string> Board::destroyed(std::vector<std::vector<std::string>>ships){
+
+  std::vector<std::string> shipsGone = {};
+  
+  for(int k=0;k<ships.size();k++){
+    int shipParts = 0;
+    for(int i=0;i<Board::boardState.size();i++){
+      for(int j=0;j<Board::boardState[i].size();j++){
+        if(Board::boardState[i][j] == ships[k][0].substr(0,1)){
+          shipParts++;
+        }
+      }
+    }
+    if(shipParts == 0){
+      shipsGone.push_back(ships[k][0]);
+    }
+  } 
+  return shipsGone;
+}
+

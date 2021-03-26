@@ -26,18 +26,58 @@ void Game::gameMode1(){
   userPlayer.placeShips(ships);
 
   int winner = 0;
+  std::vector<std::string> destroyed;
 
-  //while(true){
+  std::string inp;
 
-    userPlayer.takeTurn(compPlayer.compBoard);
-    if(userPlayer.winner){
-      std::cout<<"\nWINNER\n";
-      //break;
+  while(true){
+
+
+
+    std::cout<<"Start Turn?(Any input)";
+    std::cin>>inp;
+    std::cin.clear();
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    std::cout<<"----------------YOUR TURN----------------------";
+
+    compPlayer.compBoard = userPlayer.takeTurn(compPlayer.compBoard);
+
+    destroyed = compPlayer.compBoard.destroyed(ships);
+
+    std::cout<<"\nEnemy ships destroyed:\n";
+    for(int i=0;i<destroyed.size();i++){
+      std::cout<<destroyed[i]<<std::endl;
     }
-    //compPlayer.takeTurn(userPlayer.userBoard);
-    //if(compPlayer.winner){
-    //  std::cout<<"\nLOSER\n";
-    //  break;
-    //}
-  //}
+    if(destroyed.size() == 0){
+      std::cout<<"None\n";
+    } else if(destroyed.size() == ships.size()){
+      std::cout<<"\nWINNER!!\n\n";
+      break;
+    }
+
+
+
+    std::cout<<"End Turn?(Any input)";
+    std::cin>>inp;
+    std::cin.clear();
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    std::cout<<"----------------ENEMY TURN----------------------";
+
+    userPlayer.userBoard = compPlayer.takeTurn(userPlayer.userBoard);
+
+    destroyed = userPlayer.userBoard.destroyed(ships);
+    std::cout<<"\nYour ships destroyed:\n";
+    for(int i=0;i<destroyed.size();i++){
+      std::cout<<destroyed[i]<<std::endl;
+    }
+    if(destroyed.size() == 0){
+      std::cout<<"None\n";
+    } else if(destroyed.size() == ships.size()){
+      std::cout<<"\nLOSER!!\n\n";
+      break;
+    }
+  }
+
+  
+
 }

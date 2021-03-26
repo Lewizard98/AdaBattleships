@@ -9,6 +9,7 @@ class Board{
   void generateBoard();
   void renderBoard();
   void renderOtherBoard();
+  std::vector<std::string> destroyed(std::vector<std::vector<std::string>>);
   std::vector<std::vector<std::string>> getBoardState();
   std::vector<std::vector<std::string>> boardState;
   std::vector<std::string> toplineAlpha = {"a","b","c","d","e","f","g","h","i","j"};
