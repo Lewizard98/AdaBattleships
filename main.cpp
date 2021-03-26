@@ -5,17 +5,6 @@
 
 int main() {
 
-  IniParser iniParser;
-  iniParser.CheckFileExists();
-  iniParser.getConfig();
-
-  std::cout<<iniParser.boardConfig<<std::endl;
-  for(int i=0;i<iniParser.shipsConfig.size();i++){
-      std::cout<<iniParser.shipsConfig[i]<<std::endl;
-  }
-  
-
-
   //Declaring variables 
   int gameType;
 

@@ -6,7 +6,7 @@
 class Board{
   public:
   Board();
-  void generateBoard();
+  void generateBoard(std::vector<std::string>);
   void renderBoard();
   void renderOtherBoard();
   std::vector<std::string> destroyed(std::vector<std::vector<std::string>>);

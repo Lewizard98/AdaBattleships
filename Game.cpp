@@ -1,15 +1,20 @@
 #include "headers/Game.h"
 #include <iostream>
+#include "headers/IniParser.h"
 
 //Constructor
 Game::Game(){
 
+  IniParser iniParser;
+  iniParser.CheckFileExists();
+  iniParser.getConfig();
+
   //Generate the two boards for each player
-  p1Board.generateBoard();
-  p2Board.generateBoard();
+  p1Board.generateBoard(iniParser.boardConfig);
+  p2Board.generateBoard(iniParser.boardConfig);
 
   //The list of ships and their sizes
-  ships = {{"Carrier","5"},{"Battleship","4"},{"Destroyer","3"},{"Submarine","3"},{"Patrol Boat","2"}};
+  ships = iniParser.shipsConfig;
 }
 
   // Player Vs Computer game mode

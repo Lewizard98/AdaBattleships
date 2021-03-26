@@ -7,6 +7,6 @@ class IniParser{
   bool CheckFileExists();
   void getConfig();
   std::string fileName;
-  std::string boardConfig;
-  std::vector<std::string> shipsConfig;
+  std::vector<std::string> boardConfig;
+  std::vector<std::vector<std::string>> shipsConfig;
 };

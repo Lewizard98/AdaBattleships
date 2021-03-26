@@ -16,8 +16,8 @@ Board::Board(){
 }
 
 //Generate the board based on size
-void Board::generateBoard(){
-  int boardSize = 10;
+void Board::generateBoard(std::vector<std::string> boardConfig){
+  int boardSize = stoi(boardConfig[0]);
   int fullBoard = (boardSize+1)*2;
   std::vector<std::string> line;
 
